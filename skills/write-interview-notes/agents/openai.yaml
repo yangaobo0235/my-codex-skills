@@ -1,0 +1,4 @@
+interface:
+  display_name: "面试笔记编写"
+  short_description: "按照 E/Q 与黄蓝回答框整理可直接用于面试的结构化笔记"
+  default_prompt: "Use $write-interview-notes to rewrite these interview notes into the E/Q structure with complete direct answers and non-repetitive deep-dive supplements."

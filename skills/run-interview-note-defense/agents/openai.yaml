@@ -1,0 +1,4 @@
+interface:
+  display_name: "多轮攻防面试笔记"
+  short_description: "三角色隔离执行简历项目多轮攻防，并重写完整可用的面试笔记"
+  default_prompt: "使用 $run-interview-note-defense 按三角色多轮攻防重写我的实习或项目面试笔记。"

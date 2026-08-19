@@ -1,0 +1,4 @@
+interface:
+  display_name: "Engineering Resume Writer"
+  short_description: "Write focused, evidence-backed engineering resume bullets"
+  default_prompt: "Use $write-engineering-resume to rewrite my project experience into concise, evidence-backed engineering resume bullets."
