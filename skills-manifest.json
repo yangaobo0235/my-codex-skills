@@ -72,6 +72,5 @@
       "role": "supporting-tool",
       "skills": []
     }
-  ],
-  "excludedPlugins": ["superpowers@openai-api-curated"]
+  ]
 }

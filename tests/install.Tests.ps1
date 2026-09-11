@@ -44,9 +44,23 @@ Assert-Equal $expectedSkills.Count @($manifest.personalSkills).Count 'personal s
 foreach ($skillName in $expectedSkills) {
     Assert-True ($skillName -in $manifest.personalSkills) "manifest includes $skillName"
 }
-Assert-Equal 11 @($manifest.plugins).Count 'plugin count'
-Assert-True ('superpowers@openai-api-curated' -notin @($manifest.plugins.id)) 'superpowers is not installed'
-Assert-True ('superpowers@openai-api-curated' -in @($manifest.excludedPlugins)) 'superpowers is explicitly excluded'
+$expectedPluginIds = @(
+    'computer-use@openai-bundled',
+    'documents@openai-primary-runtime',
+    'pdf@openai-primary-runtime',
+    'presentations@openai-primary-runtime',
+    'spreadsheets@openai-primary-runtime',
+    'template-creator@openai-primary-runtime',
+    'visualize@openai-bundled',
+    'browser@openai-bundled',
+    'chrome@openai-bundled',
+    'codex-app-tools@openai-bundled',
+    'unified-computer-use@openai-bundled'
+)
+Assert-Equal $expectedPluginIds.Count @($manifest.plugins).Count 'plugin count'
+foreach ($pluginId in $expectedPluginIds) {
+    Assert-True ($pluginId -in @($manifest.plugins.id)) "manifest includes $pluginId"
+}
 
 $trackedTextFiles = Get-ChildItem -LiteralPath $repoRoot -Recurse -File | Where-Object {
     $_.Extension -in @('.md', '.json', '.ps1', '.py', '.yaml', '.yml') -and

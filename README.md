@@ -21,8 +21,8 @@ https://github.com/yangaobo0235/my-codex-skills
 
 请先阅读仓库根目录的 README.md 和 skills-manifest.json，再按 README 的说明执行 install.ps1。
 安装前先运行检查模式；确认范围后安装全部个人 skill 和清单中的插件。
-如果 openai-bundled 或 openai-primary-runtime 尚未注册，请让脚本从当前 Codex 桌面版和官方主运行时中自动发现并注册，不要安装清单以外的替代插件。
-不要安装 superpowers；它已被明确排除。
+如果 openai-bundled 或 openai-primary-runtime 尚未注册，请让脚本从当前 Codex 桌面版和官方主运行时中自动发现并注册。
+请只安装 skills-manifest.json 的 plugins 数组列出的插件，不安装或替换清单以外的插件。
 不要上传或输出任何 Token、密码、账户授权、本机配置或绝对路径。
 安装完成后验证结果，并告诉我是否需要重启 Codex。
 ```
@@ -92,7 +92,7 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1 -CodexHomePath '.\codex-h
 - `codex-app-tools`：提供 Codex 桌面端工具
 - `unified-computer-use`：提供浏览器自动化运行时
 
-`superpowers` 已从清单移除并列入 `excludedPlugins`，以后执行本仓库脚本不会安装它。插件由当前 Codex 官方桌面包或主运行时提供，仓库不保存插件缓存。
+`plugins` 数组是安装白名单；脚本只安装其中列出的插件，不处理清单以外的插件。插件由当前 Codex 官方桌面包或主运行时提供，仓库不保存插件缓存。
 
 Codex 自带的 `imagegen`、`openai-docs`、`plugin-creator`、`review-agent`、`skill-creator` 和 `skill-installer` 不需要复制源码。
 
