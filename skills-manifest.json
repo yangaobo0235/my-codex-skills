@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "capturedAt": "2026-09-09",
+  "capturedAt": "2026-09-11",
   "personalSkills": [
     "backend-interview-simulator",
     "kwai",
@@ -12,6 +12,7 @@
     "imagegen",
     "openai-docs",
     "plugin-creator",
+    "review-agent",
     "skill-creator",
     "skill-installer"
   ],
@@ -42,26 +43,6 @@
       "skills": ["spreadsheets", "excel-live-control"]
     },
     {
-      "id": "superpowers@openai-api-curated",
-      "role": "skill-provider",
-      "skills": [
-        "brainstorming",
-        "dispatching-parallel-agents",
-        "executing-plans",
-        "finishing-a-development-branch",
-        "receiving-code-review",
-        "requesting-code-review",
-        "subagent-driven-development",
-        "systematic-debugging",
-        "test-driven-development",
-        "using-git-worktrees",
-        "using-superpowers",
-        "verification-before-completion",
-        "writing-plans",
-        "writing-skills"
-      ]
-    },
-    {
       "id": "template-creator@openai-primary-runtime",
       "role": "skill-provider",
       "skills": ["template-creator"]
@@ -73,13 +54,13 @@
     },
     {
       "id": "browser@openai-bundled",
-      "role": "supporting-tool",
-      "skills": []
+      "role": "skill-provider",
+      "skills": ["control-in-app-browser"]
     },
     {
       "id": "chrome@openai-bundled",
-      "role": "supporting-tool",
-      "skills": []
+      "role": "skill-provider",
+      "skills": ["control-chrome"]
     },
     {
       "id": "codex-app-tools@openai-bundled",
@@ -92,8 +73,5 @@
       "skills": []
     }
   ],
-  "configuredButNotInstalled": [
-    "google-calendar@openai-curated",
-    "slack@openai-curated"
-  ]
+  "excludedPlugins": ["superpowers@openai-api-curated"]
 }

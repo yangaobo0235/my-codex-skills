@@ -1,4 +1,4 @@
-# 我的 Codex Skills 一键恢复包
+# 我的 Codex Skill 与插件一键恢复包
 
 这个仓库保存我的个人 Codex skill，并记录这台电脑正在使用的 Codex 插件。换电脑后，可以让 Codex 根据本说明自动恢复，也可以在 PowerShell 中手动运行安装脚本。
 
@@ -9,22 +9,25 @@
 先在新电脑完成以下准备：
 
 1. 安装并启动 Codex。
-2. 登录 GitHub，并确认当前账号有权访问这个私有仓库。
-3. 打开一个新的 Codex 对话。
+2. 至少启动一次 Codex 桌面版，让官方内置插件和文档运行时完成初始化。
+3. 登录 GitHub，并确认当前账号有权访问这个私有仓库。
+4. 打开一个新的 Codex 对话。
 
 然后把下面这段话连同仓库链接发送给 Codex：
 
 ```text
-请恢复这个仓库中的全部 Codex skill 和插件：
+请恢复这个仓库清单中的全部个人 skill 和插件：
 https://github.com/yangaobo0235/my-codex-skills
 
 请先阅读仓库根目录的 README.md 和 skills-manifest.json，再按 README 的说明执行 install.ps1。
 安装前先运行检查模式；确认范围后安装全部个人 skill 和清单中的插件。
+如果 openai-bundled 或 openai-primary-runtime 尚未注册，请让脚本从当前 Codex 桌面版和官方主运行时中自动发现并注册，不要安装清单以外的替代插件。
+不要安装 superpowers；它已被明确排除。
 不要上传或输出任何 Token、密码、账户授权、本机配置或绝对路径。
 安装完成后验证结果，并告诉我是否需要重启 Codex。
 ```
 
-Codex 会读取仓库里的 `README.md`、`skills-manifest.json` 和 `install.ps1`，然后把个人 skill 安装到当前用户的 Codex skill 目录，并补齐清单中缺失的插件。安装完成后重启 Codex，新 skill 会在下一次会话中生效。
+Codex 会读取仓库里的 `README.md`、`skills-manifest.json` 和 `install.ps1`，然后把个人 skill 安装到当前用户的 Codex skill 目录，并补齐清单中缺失的插件。脚本会自动发现当前 Codex 桌面版附带的 `openai-bundled` 市场，以及文档主运行时附带的 `openai-primary-runtime` 市场。安装完成后重启 Codex，新能力会在下一次会话中生效。
 
 ## 备用方式：手动安装
 
@@ -47,18 +50,20 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 powershell -ExecutionPolicy Bypass -File .\install.ps1 -SkipPlugins
 ```
 
-指定自定义 Codex 目录：
+指定自定义 Codex 目录（以下使用相对目录示例）：
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1 -CodexHomePath 'D:\\CodexHome'
+powershell -ExecutionPolicy Bypass -File .\install.ps1 -CodexHomePath '.\codex-home'
 ```
 
 ## 安装行为
 
 - 个人 skill 安装到 `$CODEX_HOME\skills`；未设置 `CODEX_HOME` 时使用 `%USERPROFILE%\.codex\skills`。
 - 已存在的 skill 不会覆盖，避免破坏新电脑上已有内容。
+- 缺少 `openai-bundled` 或 `openai-primary-runtime` 时，脚本会从当前 Codex 官方桌面包或主运行时自动发现并注册。
 - 已安装的插件会自动跳过，脚本可以重复运行。
 - `-Check` 模式不会创建目录、复制文件或安装插件。
+- 安装结束会重新读取插件清单，确认 11 个插件全部存在。
 - 安装后需要重启 Codex。
 
 ## 本仓库包含什么
@@ -73,9 +78,23 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1 -CodexHomePath 'D:\\Codex
 
 ### 插件
 
-`skills-manifest.json` 记录了当前使用的文档、PDF、表格、PPT、浏览器、电脑操作、可视化和 Superpowers 插件。插件由 Codex 官方市场或运行时重新下载，仓库不复制插件缓存。
+`skills-manifest.json` 记录以下 11 个插件：
 
-Codex 自带的 `imagegen`、`openai-docs`、`plugin-creator`、`skill-creator` 和 `skill-installer` 不需要复制源码。
+- `computer-use`：控制 Windows 桌面应用
+- `documents`：创建和编辑 Word 文档
+- `pdf`：读取、创建和检查 PDF
+- `presentations`：创建和编辑 PowerPoint 演示文稿
+- `spreadsheets`：创建、分析和编辑表格，并支持实时 Excel 控制
+- `template-creator`：制作可复用的个人文档模板
+- `visualize`：创建图表、地图、流程图和交互式可视化
+- `browser`：控制 Codex 内置浏览器
+- `chrome`：控制带有现有登录状态的 Chrome
+- `codex-app-tools`：提供 Codex 桌面端工具
+- `unified-computer-use`：提供浏览器自动化运行时
+
+`superpowers` 已从清单移除并列入 `excludedPlugins`，以后执行本仓库脚本不会安装它。插件由当前 Codex 官方桌面包或主运行时提供，仓库不保存插件缓存。
+
+Codex 自带的 `imagegen`、`openai-docs`、`plugin-creator`、`review-agent`、`skill-creator` 和 `skill-installer` 不需要复制源码。
 
 ## 前置条件与常见问题
 
@@ -89,14 +108,14 @@ git ls-remote https://github.com/yangaobo0235/my-codex-skills.git
 
 ### 插件安装失败
 
-确认新电脑已经安装最新版 Codex，并且 Codex 能正常访问插件市场。可以先运行：
+确认新电脑已经安装并至少启动过一次最新版 Codex 桌面版。可以先运行：
 
 ```powershell
 codex plugin marketplace list
 codex plugin list --json
 ```
 
-然后再次运行 `install.ps1`。脚本只会补装缺失插件。
+然后再次运行 `install.ps1`。脚本只会注册清单所需的官方本地市场并补装缺失插件。如果仍提示找不到 `openai-primary-runtime`，请先重启 Codex，让主运行时完成下载后再重试。
 
 ### skill 已经存在
 

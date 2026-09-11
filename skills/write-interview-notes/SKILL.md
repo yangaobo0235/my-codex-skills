@@ -189,7 +189,7 @@ When merging older notes or PDF content:
 Run [scripts/validate_notes.py](scripts/validate_notes.py) on every changed file or directory:
 
 ```powershell
-python C:\Users\33769\.codex\skills\write-interview-notes\scripts\validate_notes.py <path>
+python .\scripts\validate_notes.py <path>
 ```
 
 Then manually verify:
